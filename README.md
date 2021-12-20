@@ -1,5 +1,17 @@
 # Getting Started with React Amplify App
 
+## TechStack
+
+### Node.js
+### JavaScript
+### React
+### GraphQL
+### DynamoDB
+### AWS Amplify
+### AWS AppSync
+### AWS Cognito
+### AWS S3
+
 # Quick Start
 
 To quick start the app, run ( IDE: VS Code recommended):
