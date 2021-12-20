@@ -1,5 +1,13 @@
 # Getting Started with React Amplify App
 
+# Quick Start
+
+To quick start the app, run ( IDE: VS Code recommended):
+`npm i`
+`npm run start`
+
+This will open the app in your browser.
+
 # Project Setup
 Description how the Project was set up and can be build from scratch
 
@@ -27,7 +35,7 @@ Basic Tutorial for React App in Amplify for further instructions:
 To add auth with AWS Cognito and Cognito User Pool you can use `amplify add auth` or `amplify import auth` to add Authentication.
 [https://docs.amplify.aws/cli/auth/import/](https://docs.amplify.aws/cli/auth/import/)
 
-It is required to confire amplify in the project as well ( see index.js ).
+It is required to configure amplify in the project as well ( see index.js ).
 
 ### Amplify add Auth `amplify add api`
 To add an API you can use `amplify add api` to add e.g. a REST or GraphQL API.
