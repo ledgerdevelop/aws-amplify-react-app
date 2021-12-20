@@ -1,0 +1,12 @@
+{
+  "cognito": {
+    "REGION": "eu-central-1",
+    "USER_POOL_ID": "eu-central-1_somevalue",
+    "APP_CLIENT_ID": "some-value"
+  },
+  "graphql": {
+    "GRAPHQL_ENDPOINT": "https://some-value.com/graphql",
+    "REGION": "eu-central-1",
+    "AUTHENTICATION_TYPE": "AMAZON_COGNITO_USER_POOLS"
+  }
+}

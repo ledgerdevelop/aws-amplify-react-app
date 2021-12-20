@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "some-value",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Users\\leger\\IdeaProjects\\autogenapp-fullstack\\amplify\\backend\\api\\autogenappfullstack\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "some-value"
+    },
+    "conflictResolution": {
+      "defaultResolutionStrategy": {
+        "type": "AUTOMERGE"
+      }
+    }
+  }
+}

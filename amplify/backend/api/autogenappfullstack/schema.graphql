@@ -1,0 +1,185 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+type Invoice @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  amount: Float!
+  currencyCode: String
+  number: String!
+  date: AWSDateTime
+  customer: Customer @belongsTo(fields: ["customerID"])
+  customerID: ID @index(name: "byCustomer")
+}
+
+type Customer @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  carts: [Cart] @hasMany(indexName: "byCustomer", fields: ["id"])
+  invoices: [Invoice] @hasMany(indexName: "byCustomer", fields: ["id"])
+  courses: [Course] @hasMany(indexName: "byCustomer", fields: ["id"])
+  conversations: [Conversation] @hasMany(indexName: "byCustomer", fields: ["id"])
+}
+
+type Conversation @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  status: ConversationStatus!
+  askedAt: AWSDateTime
+  answeredAt: AWSDateTime
+  customer: Customer @belongsTo(fields: ["customerID"])
+  customerID: ID @index(name: "byCustomer")
+}
+
+enum ConversationStatus {
+  OPEN
+  CLOSED
+}
+
+type Cart @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  dateTime: AWSDateTime
+  totalPrice: Float!
+  currencyCode: String!
+  customer: Customer @belongsTo(fields: ["customerID"])
+  customerID: ID @index(name: "byCustomer")
+  state: OrderStatus!
+  productID: ID @index(name: "byProduct")
+  product: Product @belongsTo(fields: ["productID"])
+}
+
+enum OrderStatus {
+  NEW
+  PENDING
+  ORDERED
+}
+
+type Product @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  title: String!
+  description: String
+  price: Float!
+  currencyCode: String!
+  policy: String
+  carts: [Cart] @hasMany(indexName: "byProduct", fields: ["id"])
+}
+
+type Course @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  type: CourseType!
+  title: String!
+  description: String
+  completed: Boolean!
+  startedAt: AWSDateTime
+  endedAt: AWSDateTime
+  customer: Customer @belongsTo(fields: ["customerID"])
+  customerID: ID @index(name: "byCustomer")
+  certificate: Certificate @hasOne
+  courseFeedback: CourseFeedback @hasOne
+  publicFeedback: PublicFeedback @hasOne
+  lessons: [Lesson] @hasMany(indexName: "byCourse", fields: ["id"])
+}
+
+type Lesson @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  unit: Int!
+  title: String
+  description: String
+  completed: Boolean!
+  courseID: ID @index(name: "byCourse")
+  course: Course @belongsTo(fields: ["courseID"])
+  startedAt: AWSDateTime
+  endedAt: AWSDateTime
+  lessonFeedback: LessonFeedback @hasOne
+  Quiz: Quiz @hasOne
+}
+
+type Quiz @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  totalCorrectQuestions: Int
+  quizQuestions: [QuizQuestion] @hasMany(indexName: "byQuiz", fields: ["id"])
+}
+
+type QuizQuestion @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  unit: Int!
+  answer: Int
+  correctAnswer: Int!
+  quizID: ID @index(name: "byQuiz")
+  quiz: Quiz @belongsTo(fields: ["quizID"])
+}
+type LessonFeedback @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  ranking: Int
+  comment: String
+  averageRanking: Float
+  questions: [LessonQuestion] @hasMany(indexName: "byLessonFeedback", fields: ["id"])
+}
+
+type LessonQuestion @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  unit: Int!
+  ranking: Int!
+  lessonFeedbackID: ID @index(name: "byLessonFeedback")
+  lessonFeedback: LessonFeedback @belongsTo(fields: ["lessonFeedbackID"])
+}
+
+enum CourseType {
+  CERTIFIED
+  BASIC
+}
+
+type Certificate @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  birthDate: AWSDate!
+  insuranceNr: String!
+  startDate: AWSDateTime!
+  endDate: AWSDateTime!
+}
+
+type PublicFeedback @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  ranking: Int!
+  title: String!
+  comment: String!
+  reviewed: Boolean!
+  publicFeedbackOverview: PublicFeedbackOverview @belongsTo(fields: ["publicFeedbackOverviewID"])
+  publicFeedbackOverviewID: ID @index(name: "byPublicFeedbackOverview")
+}
+
+type PublicFeedbackOverview @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  totalRankings: Int!
+  totalRankingStars: Int!
+  averageRanking: Float!
+  Feedbacks: [PublicFeedback] @hasMany(indexName: "byPublicFeedbackOverview", fields: ["id"])
+}
+
+type CourseFeedback @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  ranking: Int!
+  comment: String
+  courseFeedbackOverview: CourseFeedbackOverview @belongsTo(fields: ["courseFeedbackOverviewID"])
+  courseFeedbackOverviewID: ID @index(name: "byCourseFeedbackOverview")
+}
+
+type CourseFeedbackOverview @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  totalRankings: Int!
+  totalRankingStars: Int!
+  averageRanking: Float!
+  Feedbacks: [CourseFeedback] @hasMany(indexName: "byCourseFeedbackOverview", fields: ["id"])
+}
+
+type GeneralStatistics @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  totalUsers: Int!
+  purchasedCoursesCertified: Int!
+  purchasedCoursesBasic: Int!
+}
+
+type CourseStatistic @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  averageInternalRanking: Float
+  totalRankings: Int!
+  totalRankingStars: Int!
+}

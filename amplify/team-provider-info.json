@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-some-value-authRole",
+      "UnauthRoleArn": "arn:aws:iam::some-value-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::some-value-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-some-value-deployment",
+      "UnauthRoleName": "amplify-some-value-unauthRole",
+      "StackName": "amplify-some-value",
+      "StackId": "arn:aws:cloudformation:eu-central-1:some-value/some-value",
+      "AmplifyAppId": "some-value"
+    },
+    "categories": {
+      "auth": {
+        "somevalue": {
+          "userPoolId": "eu-central-1_somevalue",
+          "userPoolName": "Autogen",
+          "webClientId": "somevalue",
+          "nativeClientId": "somevalue"
+        }
+      }
+    }
+  }
+}
